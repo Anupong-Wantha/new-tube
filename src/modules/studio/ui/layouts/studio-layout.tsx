@@ -1,6 +1,6 @@
 import {  SidebarProvider } from "@/components/ui/sidebar";
-import StudioNavbar from "../component/studio-navbar";
-import StudioSidebar from "../component/studio-sidebar";
+import StudioNavbar from "../components/studio-navbar";
+import StudioSidebar from "../components/studio-sidebar";
 
 interface StudioLayoutProps{
     children:React.ReactNode;
