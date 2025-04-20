@@ -2,6 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  images:{
+    remotePatterns:[
+      {
+        protocol:"https",
+        hostname:"image.mux.com",
+      }
+    ]
+  },
   env: {
     CLERK_SIGNING_SECRET: process.env.CLERK_SIGNING_SECRET,
   }
