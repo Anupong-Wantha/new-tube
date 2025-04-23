@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CopyCheckIcon, CopyIcon, Globe2Icon, ImagePlusIcon, LockIcon, MoreVerticalIcon, RotateCcwIcon, SparklesIcon, TrashIcon } from "lucide-react";
+import { CopyCheckIcon, CopyIcon, Globe2Icon, ImagePlusIcon, Loader2Icon, LockIcon, MoreVerticalIcon, RotateCcwIcon, SparklesIcon, TrashIcon } from "lucide-react";
 import {DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
@@ -91,6 +91,43 @@ export const FromSectionSuspense = ({ videoId }:FromSectionProps) =>{
         },
     });
 
+    
+    const generateDescription = trpc.videos.generateDescription.useMutation({
+        onSuccess:()=>{
+            toast.success("Background job started",{ description: <span className="text-muted-foreground">This may take some time</span> });
+        },
+        onError:()=>{
+            toast.error("Somthing went wrong")
+        },
+    });
+    const generateTitle = trpc.videos.generateTitle.useMutation({
+        onSuccess:()=>{
+            toast.success("Background job started",{ description: <span className="text-muted-foreground">This may take some time</span> });
+        },
+        onError:()=>{
+            toast.error("Somthing went wrong")
+        },
+    });
+    const generateThumbnail = trpc.videos.generateThumbnail.useMutation({
+        onSuccess:()=>{
+            toast.success("Background job started",{ description: <span className="text-muted-foreground">This may take some time</span> });
+        },
+        onError:()=>{
+            toast.error("Somthing went wrong")
+        },
+    });
+
+    const restoreThumbnail = trpc.videos.restoreThumbnail.useMutation({
+        onSuccess:()=>{
+            utils.studio.getMany.invalidate();
+            utils.studio.getOne.invalidate({id:videoId});
+            toast.success("Thumbnail restored");
+        },
+        onError:()=>{
+            toast.error("Somthing went wrong")
+        },
+    });
+
     const form = useForm<z.infer<typeof videoUpdateSchema>>({
         resolver: zodResolver(videoUpdateSchema),
         defaultValues:video,
@@ -153,8 +190,22 @@ export const FromSectionSuspense = ({ videoId }:FromSectionProps) =>{
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>
+                                            <div className=" flex items-center gap-x-2">
                                             Title
-                                            {/* TODO: add AI generate button */}
+                                            <Button
+                                                size="icon"
+                                                variant="outline"
+                                                type="button"
+                                                className=" rounded-full size-6 [&_svg]:size-3"
+                                                onClick={()=>generateTitle.mutate({id:videoId})}
+                                                disabled={generateTitle.isPending || !video.muxTrackId}
+                                            >
+                                                {generateThumbnail.isPending? <Loader2Icon className="animate-spin"/>
+                                                : <SparklesIcon/>
+                                                }
+                                                
+                                            </Button>
+                                            </div>
                                         </FormLabel>
                                         <FormControl>
                                             <Input
@@ -172,8 +223,22 @@ export const FromSectionSuspense = ({ videoId }:FromSectionProps) =>{
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>
+                                        <div className=" flex items-center gap-x-2">
                                             Description
-                                            {/* TODO: add AI generate button */}
+                                            <Button
+                                                size="icon"
+                                                variant="outline"
+                                                type="button"
+                                                className=" rounded-full size-6 [&_svg]:size-3"
+                                                onClick={()=>generateDescription.mutate({id:videoId})}
+                                                disabled={generateDescription.isPending || !video.muxTrackId}
+                                            >
+                                                {generateDescription.isPending? <Loader2Icon className="animate-spin"/>
+                                                : <SparklesIcon/>
+                                                }
+                                                
+                                            </Button>
+                                            </div>
                                         </FormLabel>
                                         <FormControl>
                                             <Textarea
@@ -228,11 +293,14 @@ export const FromSectionSuspense = ({ videoId }:FromSectionProps) =>{
                                                         <ImagePlusIcon className="size-4 mr-1"/>
                                                         Change
                                                     </DropdownMenuItem>
-                                                    <DropdownMenuItem>
+                                                    <DropdownMenuItem
+                                                        onClick={()=>generateThumbnail.mutate({ id:videoId})}
+                                                    >
                                                         <SparklesIcon className="size-4 mr-1"/>
                                                         AI-generated
                                                     </DropdownMenuItem>
-                                                    <DropdownMenuItem>
+                                                    <DropdownMenuItem 
+                                                        onClick={()=>restoreThumbnail.mutate({id:videoId})}>
                                                         <RotateCcwIcon className="size-4 mr-1"/>
                                                         Restore
                                                     </DropdownMenuItem>

@@ -1,5 +1,7 @@
+"use client";
 import { ResponsiveModal } from "@/components/responsive-modal";
-import { UploadDropzone } from "@/lib/uploadthing";
+import { UploadDropzone,UploadButton } from "@/lib/uploadthing";
+
 import { trpc } from "@/trpc/client";
 
 interface ThumbnailUploadModalProps {
@@ -27,10 +29,12 @@ export const ThumbnailUploadModal = ({
          open={open}
          onOpenChange={onOpenChange}
         >
-            <UploadDropzone
+            <UploadButton
+            
             endpoint="tumbnailUploader"
-            input={{videoId}}
+            input={{ videoId }}
             onClientUploadComplete={onUploadComplete}
+           
             />
 
         </ResponsiveModal>

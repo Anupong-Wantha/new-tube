@@ -6,9 +6,14 @@ const nextConfig: NextConfig = {
     remotePatterns:[
       {
         protocol:"https",
-        hostname:"image.mux.com",
-      }
-    ]
+        hostname:"utfs.io",
+      },
+      {
+        protocol:"https",
+        hostname:"5mjc8h44e6.ufs.sh",
+      },
+    ],
+    
   },
   env: {
     CLERK_SIGNING_SECRET: process.env.CLERK_SIGNING_SECRET,
