@@ -29,14 +29,24 @@ export const ThumbnailUploadModal = ({
          open={open}
          onOpenChange={onOpenChange}
         >
-            <UploadDropzone
-                endpoint="tumbnailUploader"
-                input={{ videoId }}
-                onClientUploadComplete={onUploadComplete}
-                onUploadError={(error) => {
-                    console.error("Upload error:", error);
-                }}
-                />
+        <UploadDropzone
+        endpoint="tumbnailUploader"
+        input={{ videoId }}
+        onClientUploadComplete={(res) => {
+            console.log("✅ Upload complete", res); // แค่ log URL ชัดๆ
+            if (res && res[0]?.url) {
+            // ทดลองเก็บ url หรือทำอะไรก็ได้
+            console.log("Uploaded file URL:", res[0].url);
+            }
+            utils.studio.getMany.invalidate();
+            utils.studio.getOne.invalidate({ id: videoId });
+            onOpenChange(false);
+        }}
+        onUploadError={(error) => {
+            console.error("Upload error:", error);
+        }}
+        />
+
 
         </ResponsiveModal>
     );
