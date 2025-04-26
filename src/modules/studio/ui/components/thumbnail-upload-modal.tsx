@@ -29,13 +29,14 @@ export const ThumbnailUploadModal = ({
          open={open}
          onOpenChange={onOpenChange}
         >
-            <UploadButton
-            
-            endpoint="tumbnailUploader"
-            input={{ videoId }}
-            onClientUploadComplete={onUploadComplete}
-           
-            />
+            <UploadDropzone
+                endpoint="tumbnailUploader"
+                input={{ videoId }}
+                onClientUploadComplete={onUploadComplete}
+                onUploadError={(error) => {
+                    console.error("Upload error:", error);
+                }}
+                />
 
         </ResponsiveModal>
     );

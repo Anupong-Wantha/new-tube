@@ -1,8 +1,13 @@
 import { clerkMiddleware,createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 const isProtectedRoute = createRouteMatcher(["/studio(.*)"]);
 
 export default clerkMiddleware(async (auth,req)=>{
+  if (req.nextUrl.pathname.startsWith("/api/uploadthing")) {
+    console.log("Bypassing uploadthing route")
+    return NextResponse.next();
+  }
     if(isProtectedRoute(req))await auth.protect();
 });
 

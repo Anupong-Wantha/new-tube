@@ -13,6 +13,7 @@ import { db } from "@/db";
 
 import { UTApi } from "uploadthing/server";
 
+
 const SIGNING_SECRET = process.env.MUX_WEBHOOK_SECRET!;
 
 type WebhookEvent = 
@@ -72,6 +73,7 @@ export const POST = async(request:Request) =>{
             if (!playbackId){
                 return new Response("Missing playback ID",{status:400});
             }
+
 
             const tempThumbnailUrl = `https://image.mux.com/${playbackId}/thumbnail.jpg`;
             const tempPreviewUrl =`https://image.mux.com/${playbackId}/animated.gif`;

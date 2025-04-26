@@ -15,7 +15,6 @@ export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
   tumbnailUploader: f({
     image: {
-
       maxFileSize: "4MB",
       maxFileCount: 1,
     },
