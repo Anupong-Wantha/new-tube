@@ -3,6 +3,7 @@ import { ResponsiveModal } from "@/components/responsive-modal";
 import { UploadDropzone,UploadButton } from "@/lib/uploadthing";
 
 import { trpc } from "@/trpc/client";
+import { Upload } from "lucide-react";
 
 interface ThumbnailUploadModalProps {
     videoId: string;
@@ -29,24 +30,24 @@ export const ThumbnailUploadModal = ({
          open={open}
          onOpenChange={onOpenChange}
         >
-        <UploadDropzone
-        endpoint="tumbnailUploader"
-        input={{ videoId }}
-        onClientUploadComplete={(res) => {
-            console.log("✅ Upload complete", res); // แค่ log URL ชัดๆ
-            if (res && res[0]?.url) {
-            // ทดลองเก็บ url หรือทำอะไรก็ได้
-            console.log("Uploaded file URL:", res[0].url);
-            }
-            utils.studio.getMany.invalidate();
-            utils.studio.getOne.invalidate({ id: videoId });
-            onOpenChange(false);
-        }}
-        onUploadError={(error) => {
-            console.error("Upload error:", error);
-        }}
-        />
 
+            
+            
+            <UploadButton 
+                endpoint="tumbnailUploader"
+                appearance={{
+                    button: "flex items-center gap-2 bg-black  px-4 py-2 rounded  w-100 ",
+                    
+                  }}
+                input={{ videoId }}
+                onClientUploadComplete={onUploadComplete}
+                onUploadError={(error) => {
+                    console.error("Upload error:", error);
+                }}
+                
+            />
+            
+            
 
         </ResponsiveModal>
     );
