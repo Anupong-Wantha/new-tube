@@ -1,4 +1,4 @@
-import { FromSection } from "../sections/from-section";
+import { FromSection } from "../sections/form-section";
 
 interface PageProps {
     videoId: string;

@@ -42,6 +42,7 @@ import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal";
 import { ThumbnailGenerateModal } from "../components/thumbnail-generate-modal";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { APP_URL } from "@/constants";
 
 
 interface FromSectionProps{
@@ -151,6 +152,16 @@ export const FromSectionSuspense = ({ videoId }:FromSectionProps) =>{
             toast.error("Somthing went wrong")
         },
     });
+    const revalidate = trpc.videos.revalidate.useMutation({
+        onSuccess:()=>{
+            utils.studio.getMany.invalidate();
+            utils.studio.getOne.invalidate({id:videoId});
+            toast.success("Video revalidated");
+        },
+        onError:()=>{
+            toast.error("Somthing went wrong")
+        },
+    });
 
     
     const generateDescription = trpc.videos.generateDescription.useMutation({
@@ -193,7 +204,7 @@ export const FromSectionSuspense = ({ videoId }:FromSectionProps) =>{
 
     };
 
-   const fullUrl = `${process.env.VECEL_URL || "http://localhost:3000"}/videos/${videoId}`;
+   const fullUrl = `${APP_URL}/videos/${videoId}`;
    const [isCopied,setIsCopied] = useState(false);
 
     const onCopy = async() =>{
@@ -234,6 +245,10 @@ export const FromSectionSuspense = ({ videoId }:FromSectionProps) =>{
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end" >
+                                    <DropdownMenuItem onClick={()=> revalidate.mutate({ id:videoId})}>
+                                        <RotateCcwIcon className="size-4 mr-2"/>
+                                        Revalidate
+                                    </DropdownMenuItem>
                                     <DropdownMenuItem onClick={()=> remove.mutate({ id:videoId})}>
                                         <TrashIcon className="size-4 mr-2"/>
                                         Delete
