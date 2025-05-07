@@ -1,9 +1,8 @@
 "use client";
 import { ResponsiveModal } from "@/components/responsive-modal";
-import { UploadDropzone,UploadButton } from "@/lib/uploadthing";
+import { UploadButton } from "@/lib/uploadthing";
 
 import { trpc } from "@/trpc/client";
-import { Upload } from "lucide-react";
 
 interface ThumbnailUploadModalProps {
     videoId: string;

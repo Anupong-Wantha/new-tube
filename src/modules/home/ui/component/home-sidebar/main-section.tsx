@@ -4,6 +4,7 @@ import { SidebarGroup, SidebarGroupContent, SidebarMenu ,SidebarMenuButton,Sideb
 import { FlameIcon, HomeIcon, PlaySquareIcon } from "lucide-react"
 import Link from "next/link"
 import { useClerk,useAuth } from "@clerk/nextjs"
+import { usePathname } from "next/navigation"
 
 const item =[
     {
@@ -26,6 +27,7 @@ const item =[
 const MianSection = () => {
     const {isSignedIn} = useAuth();
     const clerk = useClerk()
+    const pathname = usePathname();
   return (
     <SidebarGroup>
         <SidebarGroupContent>
@@ -34,7 +36,7 @@ const MianSection = () => {
                     <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton
                             tooltip={item.title} asChild
-                            isActive={false} //TODO: Change to look at current pathname
+                            isActive={pathname === item.url} 
                             onClick={(e)=>{
                                 if(!isSignedIn && item.auth){
                                     e.preventDefault();
@@ -44,7 +46,7 @@ const MianSection = () => {
 
                             }} 
                         >
-                            <Link href={item.url} className="flex items-center gap-4">
+                            <Link prefetch href={item.url} className="flex items-center gap-4">
                                 <item.icon />
                                 <span className="text-sm">{item.title}</span>
                             </Link>

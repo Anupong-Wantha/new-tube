@@ -12,8 +12,10 @@ import { commentReactionsRouter } from '@/modules/comment-reaction/server/proced
 
 
 import {   createTRPCRouter } from '../init';
+import { usersRouter } from '@/modules/users/server/procedures';
 
 export const appRouter = createTRPCRouter({
+  users: usersRouter,
   studio: studioRouter,
   categories: categoriesRouter,
   search: searchRouter,

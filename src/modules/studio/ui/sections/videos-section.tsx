@@ -105,7 +105,7 @@ export const VideosSectionSuspenes = () =>{
                     </TableHeader>
                     <TableBody>
                     { videos.pages.flatMap((page)=> page.items).map((video)=>(
-                        <Link href={`/studio/videos/${video.id}`} key={video.id} legacyBehavior>
+                        <Link prefetch href={`/studio/videos/${video.id}`} key={video.id} legacyBehavior>
                             <TableRow className="cursor-pointer " >
                                 <TableCell className="pl-6">
                                     <div className="flex items-center gap-4 ">
@@ -145,13 +145,13 @@ export const VideosSectionSuspenes = () =>{
                                     {format(new Date(video.createdAt),"d MMM yyyy")}
                                 </TableCell>
                                 <TableCell className="text-right">
-                                    views
+                                    {video.viewCount}
                                 </TableCell>
                                 <TableCell className="text-right">
-                                    comments
+                                    {video.commentCount}
                                 </TableCell>
                                 <TableCell className="text-right pr-6">
-                                    likes
+                                    {video.likeCount}
                                 </TableCell>
 
                             </TableRow>
