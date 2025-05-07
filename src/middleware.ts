@@ -1,7 +1,12 @@
 import { clerkMiddleware,createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const isProtectedRoute = createRouteMatcher(["/studio(.*)"]);
+const isProtectedRoute = createRouteMatcher([
+  "/studio(.*)",
+  "/subscriptions",
+  "/feed/subscrideb",
+  "/playlists(.*)"
+]);
 
 export default clerkMiddleware(async (auth,req)=>{
   if (req.nextUrl.pathname.startsWith("/api/uploadthing")) {
