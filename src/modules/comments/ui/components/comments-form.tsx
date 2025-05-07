@@ -6,7 +6,7 @@ import { useUser, useClerk } from "@clerk/nextjs";
 
 import { trpc } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
-import { commentsFormSchema, commentsInsertSchema } from "@/db/schema";
+import { commentsFormSchema } from "@/db/schema";
 import { Textarea } from "@/components/ui/textarea";
 import { UserAvatar } from "@/components/user-avatar";
 import {
@@ -38,7 +38,7 @@ export const CommentsForm = ({
   const create = trpc.comments.create.useMutation({
     onSuccess: () => {
       utils.comments.getMany.invalidate({ videoId });
-      utils.comments.getMany.invalidate({ videoId,parentId });
+      utils.comments.getMany.invalidate({ videoId, parentId });
       form.reset();
       toast.success("Comment added");
       onSuccess?.();

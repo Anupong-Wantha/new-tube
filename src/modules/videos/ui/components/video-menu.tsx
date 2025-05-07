@@ -7,7 +7,7 @@ import{
 } from "@/components/ui/dropdown-menu";
 import { APP_URL } from "@/constants";
 import { PlaylistAddModal } from "@/modules/playlists/ui/components/playlist-add-modal";
-import { ListPlusIcon, MoreVerticalIcon, ShareIcon, Trash2Icon, TrashIcon } from "lucide-react";
+import { ListPlusIcon, MoreVerticalIcon, ShareIcon, Trash2Icon,  } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 

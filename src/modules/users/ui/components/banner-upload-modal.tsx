@@ -1,6 +1,6 @@
 "use client";
 import { ResponsiveModal } from "@/components/responsive-modal";
-import { UploadButton, UploadDropzone } from "@/lib/uploadthing";
+import { UploadButton } from "@/lib/uploadthing";
 
 import { trpc } from "@/trpc/client";
 

@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   ChevronDownIcon,
-  ChevronsUpIcon,
   ChevronUpIcon,
   MessageSquareIcon,
   MoreVerticalIcon,
@@ -152,7 +151,7 @@ export const CommentsItem = ({
             )}
           </div>
         </div>
-        
+
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="size-8">
@@ -160,10 +159,10 @@ export const CommentsItem = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => setIsReplyOpen(true)}>
-                <MessageSquareIcon className="size-4" />
-                Reply
-              </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setIsReplyOpen(true)}>
+              <MessageSquareIcon className="size-4" />
+              Reply
+            </DropdownMenuItem>
             {comment.user.clerkId === userId && (
               <DropdownMenuItem
                 onClick={() => remove.mutate({ id: comment.id })}
@@ -174,7 +173,6 @@ export const CommentsItem = ({
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-      
       </div>
       {isReplyOpen && variant === "comment" && (
         <div className="mt-4 pl-14">
@@ -203,10 +201,7 @@ export const CommentsItem = ({
         </div>
       )}
       {comment.replyCount > 0 && variant === "comment" && isRepliesOpen && (
-        <CommentReplies
-          parentId={comment.id}
-          videoId={comment.videoId}
-        />
+        <CommentReplies parentId={comment.id} videoId={comment.videoId} />
       )}
     </div>
   );
