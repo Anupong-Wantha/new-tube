@@ -13,6 +13,7 @@ import {
   SubscriptionItemSkeleton,
 } from "../components/subscription-item";
 
+
 export const SubscriptionSection = () => {
   return (
     <Suspense fallback={<SubscriptionSectionSkeleton />}>
